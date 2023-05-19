@@ -76,7 +76,10 @@ Residence_type and stroke: There is a positive correlation between Residence_typ
 Avg_glucose_level and stroke: There is a positive correlation between Avg_glucose_level and stroke, meaning that patients with higher blood sugar levels are more likely to have a stroke.
 Bmi and stroke: There is a positive correlation between Bmi and stroke, meaning that patients with higher body mass indexes are more likely to have a stroke. **""")
 st.title('Person as Data analyst')
-df = pd.read_csv(r"C:\\Users\\youssef azam\\Desktop\\healthcare-dataset-stroke-data.csv")
+
+
+url = "https://github.com/youssef-azam/ML_APP/blob/main/healthcare-dataset-stroke-data.csv"
+df = pd.read_csv(url)
 
 
 # Display the boxplot using Streamlit
