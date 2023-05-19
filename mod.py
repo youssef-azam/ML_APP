@@ -78,9 +78,6 @@ Bmi and stroke: There is a positive correlation between Bmi and stroke, meaning 
 st.title('Person as Data analyst')
 df = pd.read_csv(r"C:\\Users\\youssef azam\\Desktop\\healthcare-dataset-stroke-data.csv")
 
-import streamlit as st
-
-import streamlit as st
 
 # Display the boxplot using Streamlit
 st.title('Boxplot')
