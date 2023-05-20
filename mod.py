@@ -78,64 +78,9 @@ Bmi and stroke: There is a positive correlation between Bmi and stroke, meaning 
 st.title('Person as Data analyst')
 url = url = "https://raw.githubusercontent.com/youssef-azam/ML_APP/main/healthcare-dataset-stroke-data.csv"
 df = pd.read_csv(url)
-df = pd.read_csv(url)
-import streamlit as st
-
-import streamlit as st
-
-# Display the boxplot using Streamlit
-st.title('Boxplot')
-fig, ax = plt.subplots()
-df.boxplot(ax=ax)
-st.pyplot(fig)
-
-# Display the histogram using Streamlit
-st.title('Histogram')
-fig, ax = plt.subplots(figsize=(15, 8))
-df.hist(ax=ax)
-st.pyplot(fig)
-
-# Save the histogram plot as a file
-plt.savefig('histogram.png')
-
-hypertension_counts = df["hypertension"].value_counts()
-fig, ax = plt.subplots()
-ax.pie(hypertension_counts, labels=hypertension_counts.index)
-ax.set_title("Percentage of Patients with Hypertension")
-st.pyplot(fig)
 
 
-# Disable the warning for using global figure object
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
-# Create a bar chart of the number of patients by residence type
-residence_type_counts = df["Residence_type"].value_counts()
-plt.bar(residence_type_counts.index, residence_type_counts.values)
-plt.xlabel("Residence Type")
-plt.ylabel("Number of Patients")
-plt.title("Number of Patients by Residence Type")
-st.pyplot()
-
-# Create a scatter plot of the average glucose level and the BMI of the patients
-plt.scatter(df["avg_glucose_level"], df["bmi"])
-plt.xlabel("Average Glucose Level")
-plt.ylabel("BMI")
-plt.title("Scatter Plot of Average Glucose Level and BMI")
-st.pyplot()
-
-# Create a pie chart of the number of patients with hypertension
-hypertension_counts = df["hypertension"].value_counts()
-plt.pie(hypertension_counts, labels=hypertension_counts.index)
-plt.title("Percentage of Patients with Hypertension")
-st.pyplot()
-
-# Create a bar chart of the number of patients by gender
-gender_counts = df["gender"].value_counts()
-plt.bar(gender_counts.index, gender_counts.values)
-plt.xlabel("Gender")
-plt.ylabel("Number of Patients")
-plt.title("Number of Patients by Gender")
-st.pyplot()
 
 st.markdown(""" 
 Frist insight
@@ -145,39 +90,6 @@ The bar chart shows that the majority of patients in the dataset are female and 
 """)
 
 
-# Create a bar chart of the number of patients by work type
-plt.bar(df["work_type"].unique(), df["work_type"].value_counts())
-plt.xlabel("Work Type")
-plt.ylabel("Number of Patients")
-plt.title("Number of Patients by Work Type")
-st.pyplot()
-
-
-# Create a scatter plot of the average glucose level and the BMI of the patients
-plt.scatter(df["avg_glucose_level"], df["bmi"])
-plt.xlabel("Average Glucose Level")
-plt.ylabel("BMI")
-plt.title("Scatter Plot of Average Glucose Level and BMI")
-st.pyplot()
-
-st.title("Machine Learning")
-
-st.title("Feature Engineering")
-# Calculate the correlation matrix
-corr = df.corr()
-
-# Create a Streamlit figure
-fig, ax = plt.subplots(figsize=(8, 8))
-
-# Plot the correlation matrix using a heatmap
-sns.heatmap(corr, annot=True, cmap="Blues", ax=ax)
-
-# Set the title and axis labels
-ax.set_title("Correlation Matrix")
-ax.set_xlabel("Features")
-ax.set_ylabel("Features")
-
-st.pyplot(fig)
 
 
 st.title('After Model preprocessing and cross-validation and ')
