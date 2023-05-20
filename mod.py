@@ -126,7 +126,7 @@ gender_Male = st.selectbox('Gender: Male', ['No', 'Yes'])
 
 # Create a function to make predictions and display the output
 def predict_stroke():
-    encoder = OneHotEncoder(sparse=False, handle_unknown='ignore', sparse_output=True)
+    encoder = OneHotEncoder(sparse=False, handle_unknown='ignore', sparse_output=False)
     categorical_features = [[hypertension, heart_disease, work_type_Govt_job, work_type_Never_worked,
                              work_type_Private, work_type_Self_employed, work_type_children,
                              residence_type_Rural, residence_type_Urban, smoking_status_Unknown,
