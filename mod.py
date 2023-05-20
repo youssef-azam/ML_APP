@@ -2,7 +2,7 @@ import pickle
 import pandas as pd
 import streamlit as st
 import numpy as np
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 import streamlit as st
 import seaborn as sns
@@ -81,6 +81,70 @@ df = pd.read_csv(url)
 
 
 
+# Display the boxplot using Streamlit
+st.title('Boxplot')
+fig_box, ax_box = plt.subplots()
+df.boxplot(ax=ax_box)
+st.pyplot(fig_box)
+
+# Display the histogram using Streamlit
+st.title('Histogram')
+fig_hist, ax_hist = plt.subplots(figsize=(15, 8))
+df.hist(ax=ax_hist)
+st.pyplot(fig_hist)
+
+# Save the histogram plot as a file
+plt.savefig('histogram.png')
+
+# Create a pie chart of the number of patients with hypertension
+fig_pie_hyp, ax_pie_hyp = plt.subplots()
+hypertension_counts = df["hypertension"].value_counts()
+ax_pie_hyp.pie(hypertension_counts, labels=hypertension_counts.index)
+ax_pie_hyp.set_title("Percentage of Patients with Hypertension")
+st.pyplot(fig_pie_hyp)
+
+# Create a bar chart of the number of patients by work type
+fig_bar_work, ax_bar_work = plt.subplots()
+work_type_counts = df["work_type"].value_counts()
+ax_bar_work.bar(work_type_counts.index, work_type_counts.values)
+ax_bar_work.set_xlabel("Work Type")
+ax_bar_work.set_ylabel("Number of Patients")
+ax_bar_work.set_title("Number of Patients by Work Type")
+st.pyplot(fig_bar_work)
+
+# Create a bar chart of the number of patients by residence type
+fig_bar_res, ax_bar_res = plt.subplots()
+residence_type_counts = df["Residence_type"].value_counts()
+ax_bar_res.bar(residence_type_counts.index, residence_type_counts.values)
+ax_bar_res.set_xlabel("Residence Type")
+ax_bar_res.set_ylabel("Number of Patients")
+ax_bar_res.set_title("Number of Patients by Residence Type")
+st.pyplot(fig_bar_res)
+
+# Create a scatter plot of the average glucose level and the BMI of the patients
+fig_scatter, ax_scatter = plt.subplots()
+ax_scatter.scatter(df["avg_glucose_level"], df["bmi"])
+ax_scatter.set_xlabel("Average Glucose Level")
+ax_scatter.set_ylabel("BMI")
+ax_scatter.set_title("Scatter Plot of Average Glucose Level and BMI")
+st.pyplot(fig_scatter)
+
+# Create a pie chart of the number of patients with hypertension
+fig_pie_hyp2, ax_pie_hyp2 = plt.subplots()
+hypertension_counts = df["hypertension"].value_counts()
+ax_pie_hyp2.pie(hypertension_counts, labels=hypertension_counts.index)
+ax_pie_hyp2.set_title("Percentage of Patients with Hypertension")
+st.pyplot(fig_pie_hyp2)
+
+# Create a bar chart of the number of patients by gender
+fig_bar_gender, ax_bar_gender = plt.subplots()
+gender_counts = df["gender"].value_counts()
+ax_bar_gender.bar(gender_counts.index, gender_counts.values)
+ax_bar_gender.set_xlabel("Gender")
+ax_bar_gender.set_ylabel("Number of Patients")
+ax_bar_gender.set_title("Number of Patients by Gender")
+st.pyplot(fig_bar_gender)
+
 
 st.markdown(""" 
 Frist insight
@@ -98,7 +162,7 @@ st.title("Accuracy is Equal = 94.5 %")
 
 
 # Load the model
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('modelf.pkl', 'rb'))
 
 # Create a form to input the features
 st.title('Stroke Prediction')
@@ -108,31 +172,20 @@ hypertension = st.selectbox('Hypertension', ['No', 'Yes'])
 heart_disease = st.selectbox('Heart Disease', ['No', 'Yes'])
 avg_glucose_level = st.slider('Average Glucose Level', 70, 200)
 bmi = st.slider('BMI', 18, 40)
-work_type_Govt_job = st.selectbox('Work Type: Govt Job', ['No', 'Yes'])
-work_type_Never_worked = st.selectbox('Work Type: Never Worked', ['No', 'Yes'])
-work_type_Private = st.selectbox('Work Type: Private', ['No', 'Yes'])
-work_type_Self_employed = st.selectbox('Work Type: Self-employed', ['No', 'Yes'])
-work_type_children = st.selectbox('Work Type: Children', ['No', 'Yes'])
-residence_type_Rural = st.selectbox('Residence Type: Rural', ['No', 'Yes'])
-residence_type_Urban = st.selectbox('Residence Type: Urban', ['No', 'Yes'])
-smoking_status_Unknown = st.selectbox('Smoking Status: Unknown', ['No', 'Yes'])
-smoking_status_formerly_smoked = st.selectbox('Smoking Status: Formerly Smoked', ['No', 'Yes'])
-smoking_status_never_smoked = st.selectbox('Smoking Status: Never Smoked', ['No', 'Yes'])
-smoking_status_smokes = st.selectbox('Smoking Status: Smokes', ['No', 'Yes'])
-ever_married_No = st.selectbox('Ever Married: No', ['No', 'Yes'])
-ever_married_Yes = st.selectbox('Ever Married: Yes', ['No', 'Yes'])
-gender_Female = st.selectbox('Gender: Female', ['No', 'Yes'])
-gender_Male = st.selectbox('Gender: Male', ['No', 'Yes'])
+work_type = st.selectbox('Work Type:', ['Govt Job', 'Never Worked', 'Private', 'Self-employed', 'Children'])
+residence_type = st.selectbox('Residence Type:', ['Rural', 'Urban'])
+smoking_status = st.selectbox('Smoking Status:', ['Unknown', 'Formerly Smoked', 'Never Smoked', 'Smokes'])
+ever_married = st.selectbox('Ever Married:', ['No', 'Yes'])
+gender = st.selectbox('Gender:', ['Male', 'Female'])
 
 # Create a function to make predictions and display the output
+encoder = LabelEncoder()
+
 def predict_stroke():
-    encoder = OneHotEncoder(sparse=False, handle_unknown='ignore', sparse_output=False)
-    categorical_features = [[hypertension, heart_disease, work_type_Govt_job, work_type_Never_worked,
-                             work_type_Private, work_type_Self_employed, work_type_children,
-                             residence_type_Rural, residence_type_Urban, smoking_status_Unknown,
-                             smoking_status_formerly_smoked, smoking_status_never_smoked,
-                             smoking_status_smokes, ever_married_No, ever_married_Yes,
-                             gender_Female, gender_Male]]
+    categorical_features = [hypertension, heart_disease, work_type,
+                            residence_type, smoking_status,
+                            ever_married,
+                            gender]
 
     # Fit the encoder on the categorical features
     encoder.fit(categorical_features)
@@ -144,20 +197,26 @@ def predict_stroke():
     numerical_features = np.array([age, avg_glucose_level, bmi]).reshape(1, -1)
 
     # Combine all features
-    features = np.concatenate((numerical_features, encoded_features), axis=1)
+    features = np.concatenate((numerical_features, encoded_features.reshape(1, -1)), axis=1)
+
+    # Make sure the number of features matches the model's expectations
+    if features.shape[1] != model.coef_.shape[1]:
+        st.error(f"The number of features ({features.shape[1]}) does not match the model's expected number of features ({model.coef_.shape[1]}).")
+        return
 
     # Predict the stroke
     prediction = model.predict(features)
 
     # Display the prediction
-    if prediction[0] == 0 :
-        st.write('Have Stroke Sade!!')
+    if prediction[0] == 0:
+        st.write('Have Stroke!')
     else:
-        st.write('Not have Stroke ,Congrats!')
+        st.write('Not have Stroke, Congrats!')
 
 # Add a button to trigger the prediction function
 if st.button('Predict'):
     predict_stroke()
+
 
 st.title("Data scientists")
 
