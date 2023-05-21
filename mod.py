@@ -170,8 +170,8 @@ st.title('Stroke Prediction')
 age = st.slider('Age', 18, 100)
 hypertension = st.selectbox('Hypertension', ['No', 'Yes'])
 heart_disease = st.selectbox('Heart Disease', ['No', 'Yes'])
-avg_glucose_level = st.slider('Average Glucose Level', 70, 200)
-bmi = st.slider('BMI', 18, 40)
+avg_glucose_level = st.slider('Average Glucose Level', 70, 300)
+bmi = st.slider('BMI', 18, 60)
 work_type = st.selectbox('Work Type:', ['Govt Job', 'Never Worked', 'Private', 'Self-employed', 'Children'])
 residence_type = st.selectbox('Residence Type:', ['Rural', 'Urban'])
 smoking_status = st.selectbox('Smoking Status:', ['Unknown', 'Formerly Smoked', 'Never Smoked', 'Smokes'])
@@ -251,4 +251,9 @@ st.markdown("- The average cost of a stroke is about $40,000.")
 
 # Add a thank you message
 st.markdown("# THANKS ❤")
+
+st.title("Powered by Eng:Youssef Azam")
+st.write("Mobile phone: 01222627208")
+st.write("LinkedIn: https://www.linkedin.com/in/youssef-azam-a36816231")
+
 
